@@ -1,12 +1,13 @@
-import math 
+import math
+from typing import Any 
 
 class Vector:
     def __init__(self, x=0, y=0):
         self.x = x
         self.y = y
-    
+        
     def __repr__(self):
-        return f'Vector ({self.x!r}, {self.y!r})'
+        return f"Vector ({self.x!r}, {self.y!r})"
     
     def __abs__(self):
         return math.hypot(self.x, self.y)
@@ -15,7 +16,7 @@ class Vector:
         return bool(abs(self))
     
     def __add__(self, other):
-        x = self.x + other.x 
+        x = self.x + other.x
         y = self.y + other.y
         return Vector(x, y)
     
