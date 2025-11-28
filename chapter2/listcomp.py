@@ -51,3 +51,33 @@ for color in colors:
 tshirts = [(color, size) for size in sizes
            for color in colors]
 print(tshirts) # [('black', 'S'), ('white', 'S'), ('black', 'M'), ('white', 'M'), ('black', 'L'), ('white', 'L')]
+
+
+for tshirt in (f'{c} {s}' for c in colors for s in sizes):
+    print(tshirt)
+'''
+black S
+black M
+black L
+white S
+white M
+white L
+'''
+
+
+
+# tuples 
+
+def fixed(o):
+    try:
+        hash(o)
+    except TypeError:
+        return False
+    return True
+
+tf = (10, 'alpha', (1, 2)) # tuple 
+tm = (10, 'alpha', [1, 2])
+
+print(fixed(tf)) # True
+print(fixed(tm)) # False 
+
