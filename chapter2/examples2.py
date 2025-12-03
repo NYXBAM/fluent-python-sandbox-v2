@@ -37,3 +37,34 @@ print(dis.dis("s[a] += b"))
              18 RETURN_VALUE
 None
 """
+
+
+# sort and sorted 
+
+fruits = ['grape', 'raspberry', 'apple', 'banana']
+print(sorted(fruits)) # ['apple', 'banana', 'grape', 'raspberry']
+print(fruits) # ['grape', 'raspberry', 'apple', 'banana']
+print(sorted(fruits, reverse=True)) # ['raspberry', 'grape', 'banana', 'apple']
+print(sorted(fruits, key=len)) # ['grape', 'apple', 'banana', 'raspberry']
+print(sorted(fruits, key=len, reverse=True)) # ['raspberry', 'banana', 'grape', 'apple']
+fruits.sort()
+print(fruits) # ['apple', 'banana', 'grape', 'raspberry']
+
+### ARRAYS 
+
+from array import array
+from random import random
+
+floats = array('d', (random() for i in range(10**7)))
+print(floats[-1]) # 0.4874373873920117
+fp = open('floats.bin', 'wb')
+floats.tofile(fp)
+fp.close()
+floats2 = array('d')
+fp = open('floats.bin', 'rb')
+floats2.fromfile(fp, 10**7)
+fp.close()
+print(floats2[-1]) # 0.4874373873920117
+print(floats2 == floats) # True 
+
+# print(floats2.tobytes()[:50])
