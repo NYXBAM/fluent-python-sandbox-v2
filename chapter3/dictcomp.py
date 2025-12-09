@@ -30,6 +30,8 @@ d1|=d2
 print(d1) # {'a': 2, 'b': 4, 'c': 6}
 
 
-
-
+from collections import abc
+my_dict = {}
+print(isinstance(my_dict, abc.Mapping)) # True
+print(isinstance(my_dict, abc.MutableMapping)) # True
 
