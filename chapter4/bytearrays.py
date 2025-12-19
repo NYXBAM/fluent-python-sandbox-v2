@@ -29,3 +29,12 @@ print(s[:1])
 my_list = [1,3,4,5,6,6]
 
 print(type(my_list[:1]))  #class 'list'
+
+
+import array
+
+numbers = array.array('h', [-2, -1, 0, 1, 2])
+octets = bytes(numbers)
+print(octets)  #b'\xfe\xff\xff\xff\x00\x00\x01\x00\x02\x00'
+
+
