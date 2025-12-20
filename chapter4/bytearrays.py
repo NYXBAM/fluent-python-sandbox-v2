@@ -38,3 +38,19 @@ octets = bytes(numbers)
 print(octets)  #b'\xfe\xff\xff\xff\x00\x00\x01\x00\x02\x00'
 
 
+for codec in ['latin_1', 'utf_8', 'utf_16']:
+    print(codec, 'El Niño'.encode(codec), sep='\t')
+    '''
+    latin_1 b'El Ni\xf1o'
+    utf_8   b'El Ni\xc3\xb1o'
+    utf_16  b'\xff\xfeE\x00l\x00 \x00N\x00i\x00\xf1\x00o\x00'
+    '''
+    
+city = 'São Paulo'
+print(city.encode('utf_8')) # b'S\xc3\xa3o Paulo'
+print(city.encode('utf_16')) # b'\xff\xfeS\x00\xe3\x00o\x00 \x00P\x00a\x00u\x00l\x00o\x00'
+print(city.encode('iso8859_1')) # b'S\xe3o Paulo'
+# print(city.encode('cp437')) # UnicodeEncodeError: 'charmap' codec can't encode character '\xe3' in position 1: character maps to <undefined>
+print(city.encode('cp437', errors='ignore')) # b'So Paulo'
+print(city.encode('cp437', errors='replace')) # b'S?o Paulo'
+print(city.encode('cp437', errors='xmlcharrefreplace')) # b'S&#227;o Paulo'
