@@ -54,3 +54,11 @@ print(city.encode('iso8859_1')) # b'S\xe3o Paulo'
 print(city.encode('cp437', errors='ignore')) # b'So Paulo'
 print(city.encode('cp437', errors='replace')) # b'S?o Paulo'
 print(city.encode('cp437', errors='xmlcharrefreplace')) # b'S&#227;o Paulo'
+
+
+octets = b'Montr\xe9al'
+print(octets.decode('cp1252')) # Montréal
+print(octets.decode('iso8859_7'))  # Montrιal
+print(octets.decode('koi8_r')) # MontrИal
+# print(octets.decode('utf8')) #  'utf-8' codec can't decode byte 0xe9 in position 5: invalid continuation byte
+print(octets.decode('utf8', errors='replace'))  # Montr�al
