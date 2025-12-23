@@ -62,3 +62,27 @@ print(octets.decode('iso8859_7'))  # Montrιal
 print(octets.decode('koi8_r')) # MontrИal
 # print(octets.decode('utf8')) #  'utf-8' codec can't decode byte 0xe9 in position 5: invalid continuation byte
 print(octets.decode('utf8', errors='replace'))  # Montr�al
+
+
+s1 = 'café'
+s2 = 'cafe\N{COMBINING ACUTE ACCENT}'
+print(s1,s2) # café café
+print(len(s1)) # 4
+print(len(s2)) # 5
+print(s1 == s2) # False
+
+from unicodedata import normalize, name
+
+s1 = 'café'
+s2 = 'cafe\N{COMBINING ACUTE ACCENT}'
+
+print(len(normalize('NFC', s1)), len(normalize('NFC', s2))) # 4 4
+print(len(normalize('NFD', s1)), len(normalize('NFD', s2))) # 5 5
+print(normalize('NFC', s1) == normalize('NFC', s2)) # True
+
+ohm = '\u2126'
+print(name(ohm)) # OHM SIGN
+ohm_c = normalize('NFC', ohm)
+print(name(ohm_c)) # GREEK CAPITAL LETTER OMEGA
+print(ohm == ohm_c) # False 
+print(normalize('NFC', ohm) == normalize('NFC', ohm_c)) # True 
