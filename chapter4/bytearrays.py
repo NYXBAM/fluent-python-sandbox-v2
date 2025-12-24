@@ -86,3 +86,24 @@ ohm_c = normalize('NFC', ohm)
 print(name(ohm_c)) # GREEK CAPITAL LETTER OMEGA
 print(ohm == ohm_c) # False 
 print(normalize('NFC', ohm) == normalize('NFC', ohm_c)) # True 
+
+
+half = '\N{VULGAR FRACTION ONE HALF}'
+print(half) # ½
+print(normalize('NFKC', half)) # 1⁄2
+
+for char in normalize('NFKC', half):
+    print(char, name(char), sep='\t')
+    '''
+    1       DIGIT ONE
+    ⁄       FRACTION SLASH
+    2       DIGIT TWO
+    '''
+    
+micro = 'μ'
+micro_kc = normalize('NFKC', micro)
+print(micro, micro_kc) # μ μ
+print(ord(micro)) # 956
+print(ord(micro_kc)) # 956
+print(name(micro_kc)) # GREEK SMALL LETTER MU
+print(name(micro)) # GREEK SMALL LETTER MU
