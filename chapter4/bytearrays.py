@@ -107,3 +107,14 @@ print(ord(micro)) # 956
 print(ord(micro_kc)) # 956
 print(name(micro_kc)) # GREEK SMALL LETTER MU
 print(name(micro)) # GREEK SMALL LETTER MU
+
+micro = 'μ'
+print(name(micro))
+micro_cf = micro.casefold()
+print(name(micro_cf))
+print(micro, micro_cf)
+
+eszett = 'ß'
+print(name(eszett)) # LATIN SMALL LETTER SHARP S
+eszett_cf = eszett.casefold() 
+print(eszett_cf) # ss
