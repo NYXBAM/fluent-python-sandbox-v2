@@ -9,3 +9,11 @@ print(sorted_fruits) # ['acerola', 'atemoia', 'açaí', 'caju', 'cajá']
 # but this is correct way, u need to change the locale when starting u script (app)
 
 
+'''
+import pyuca
+
+coll = pyuca.Collator()
+sorted_fruits = sorted(fruits, key=coll.sort_key)
+print(sorted_fruits)
+'''
+
