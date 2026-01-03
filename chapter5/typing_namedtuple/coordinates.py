@@ -20,3 +20,26 @@ msc = Coordinate(lat=12.3333, lon=33.132)
 print(inspect.get_annotations(Coordinate)) # {'lat': <class 'float'>, 'lon': <class 'float'>}
 # Older version Python
 print(typing.get_type_hints(Coordinate)) # {'lat': <class 'float'>, 'lon': <class 'float'>}
+
+print(msc._asdict()) # {'lat': 12.3333, 'lon': 33.132}
+
+new_msc = msc._replace(lon=32.9, lat=11.1)
+
+print(new_msc) # 11.1°N, 32.9°E
+
+
+
+
+
+
+from dataclasses import make_dataclass
+from collections import namedtuple
+
+DynamicNT = namedtuple('DynamicNT', 'id value')
+
+DynamicDC = make_dataclass('DynamicDC', [('id', int), ('value', str)])
+
+obj = DynamicDC(1, 'example')
+nt_obj = DynamicNT(1, 'example')
+print(obj) # DynamicDC(id=1, value='example')
+print(nt_obj) # DynamicNT(id=1, value='example')
