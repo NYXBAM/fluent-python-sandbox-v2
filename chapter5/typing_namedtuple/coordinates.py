@@ -32,14 +32,3 @@ print(new_msc) # 11.1°N, 32.9°E
 
 
 
-from dataclasses import make_dataclass
-from collections import namedtuple
-
-DynamicNT = namedtuple('DynamicNT', 'id value')
-
-DynamicDC = make_dataclass('DynamicDC', [('id', int), ('value', str)])
-
-obj = DynamicDC(1, 'example')
-nt_obj = DynamicNT(1, 'example')
-print(obj) # DynamicDC(id=1, value='example')
-print(nt_obj) # DynamicNT(id=1, value='example')

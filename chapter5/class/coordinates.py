@@ -27,3 +27,19 @@ import typing
 Coordinate3 = typing.NamedTuple("Coordinate", [('lat', float), ('lon', float)])
 print(issubclass(Coordinate3, tuple)) # True
 print(typing.get_type_hints(Coordinate3)) # {'lat': <class 'float'>, 'lon': <class 'float'>}
+
+
+from dataclasses import asdict, make_dataclass
+from collections import namedtuple
+
+DynamicNT = namedtuple('DynamicNT', 'id value')
+
+DynamicDC = make_dataclass('DynamicDC', [('id', int), ('value', str)])
+
+obj = DynamicDC(1, 'example')
+nt_obj = DynamicNT(1, 'example')
+print(obj) # DynamicDC(id=1, value='example')
+print(nt_obj) # DynamicNT(id=1, value='example')
+print(nt_obj._asdict())  # {'id': 1, 'value': 'example'}
+print(obj.__dict__) # {'id': 1, 'value': 'example'}
+print(asdict(obj)) # {'id': 1, 'value': 'example'}
