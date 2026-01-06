@@ -5,4 +5,8 @@ class Coordinate(NamedTuple):
     lon: float
     reference: str = "WGS84"
     
-    
+
+trash = Coordinate('Ni!', None)
+
+print(trash) # Coordinate(lat='Ni!', lon=None, reference='WGS84')
+
