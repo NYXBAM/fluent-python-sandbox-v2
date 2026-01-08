@@ -8,7 +8,7 @@ def test_create_list() -> list:
 @dataclass
 class ClubMember:
     name: str
-    guests: list = field(default_factory=test_create_list)
+    guests: list = field(default_factory=list)
 
 
 s = ClubMember(name='1')
