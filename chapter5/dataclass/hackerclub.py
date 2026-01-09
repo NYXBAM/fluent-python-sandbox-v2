@@ -1,4 +1,5 @@
-from dataclasses import dataclass
+from dataclasses import InitVar, dataclass
+from typing import ClassVar
 from club_wrong import ClubMember
 
 @dataclass
@@ -31,3 +32,46 @@ print(leo2) # HackerClubMember(name='Leo Smith', guests=[], handle='Neo')
 
 print(HackerClubMember.all_handlers) # {'Leo', 'Neo', 'AnnaRaven'}
 print(HackerClubMember.__doc__)  # HackerClubMember(name: str, guests: list = <factory>, handle: str = '')
+
+
+# @dataclass
+# class C:
+#     i: int
+#     j: int = None 
+#     database: InitVar[DatabaseType] = None
+    
+#     def __post__ini__(self, database):
+#         if self.j is None and database is not None:
+#             self.j = database.lookup('j')
+        
+        
+# c = C(10, database=my_database)
+
+
+# Example how to use ClassVar and InitVar
+# This my own example, not from the book
+
+@dataclass
+class Hacker:
+    used_handles: ClassVar[set[str]] = set()
+    name: str
+    handle: str = ""
+    
+    secret_code: InitVar[str] = None
+    
+    def __post_init__(self, secret_code):
+        if secret_code != '1234':
+            raise ValueError("Invalid secret code")
+        
+        if self.handle:
+            self.handle = self.name.lower().replace(" ", "_")
+            
+        if self.handle in Hacker.used_handles:
+            raise ValueError(f"Handle {self.handle} already taken!")
+        
+        Hacker.used_handles.add(self.handle)
+         
+        
+h1 = Hacker(name="John", secret_code='1234')
+# print(h1) #Hacker(name='John', handle='')
+# h2 = Hacker(name="Jane", handle='j', secret_code='12') # ValueError: Invalid secret code
