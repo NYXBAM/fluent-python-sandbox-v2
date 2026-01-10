@@ -1,4 +1,6 @@
 from dataclasses import InitVar, dataclass
+from email.errors import NonPrintableDefect
+from types import NoneType
 from typing import ClassVar
 from club_wrong import ClubMember
 
