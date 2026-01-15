@@ -54,3 +54,61 @@ t = (10, 20)
 u = (30, 40)
 print(f(t,u)) # (10, 20, 30, 40)
 print(t,u) # (10, 20) (30, 40)
+
+
+class HauntedBus:
+    def __init__(self, passengers=[]):
+        self.passengers = passengers
+        
+    def pick(self, name):
+        self.passengers.append(name)
+        
+    def drop(self, name):
+        self.passengers.remove(name)
+        
+        
+bus1 = HauntedBus(['Alice', 'Bill'])
+print(bus1.passengers) # ['Alice', 'Bill']
+bus1.pick('Charlie')
+bus1.drop('Alice')
+print(bus1.passengers) # ['Bill', 'Charlie']
+
+bus2 = HauntedBus()
+bus2.pick("Carrie")
+print(bus2.passengers) # ['Carrie']
+
+bus3 = HauntedBus()
+print(bus3.passengers) # ['Carrie']
+bus3.pick("Dave")
+print(bus2.passengers) # ['Carrie', 'Dave']
+print(bus2.passengers is bus3.passengers) # True 
+print(bus1.passengers) #['Bill', 'Charlie']
+
+
+
+class TwilightBus:
+    def __init__(self, passengers=None):
+        if passengers is None:
+            self.passengers = []
+        else:
+            # self.passengers = passengers
+            # for fix problem with changing list
+            # u need create copy
+            # for example : 
+            self.passengers = list(passengers)
+    
+    def pick(self, name):
+        self.passengers.append(name)
+        
+    def drop(self, name):
+        self.passengers.remove(name)
+        
+basketball_team = ['Sue', 'Tina', 'Diana', 'Pat', 'Maya']
+bus = TwilightBus(basketball_team)
+bus.drop('Tina')
+bus.drop('Pat')
+print(basketball_team) # ['Sue', 'Diana', 'Maya']
+# after adding fix copy
+print(basketball_team) # ['Sue', 'Tina', 'Diana', 'Pat', 'Maya']
+
+         
