@@ -21,3 +21,18 @@ def tokenize(text: str) -> list[str]: # return list with each element str
 
 # for example
 # `stuff: list` is the same of stuff: `list[Any]`
+
+
+# func tokenize in older version Python >=3.7
+
+# from __future__ import annotations # didn't exist in 3.6
+
+def tokenize_old(text: str) -> list[str]:
+    return text.upper().split()
+
+
+# Python >=3.5
+from typing import List
+
+def tokenize_older(text: str) -> List[str]:
+    return text.upper().split()
