@@ -1,5 +1,6 @@
 
 from typing import Iterable, TypeVar
+from typing import Any
 
 T = TypeVar("T")
 
@@ -33,7 +34,7 @@ print(sorted(l)) # [<Spam(1)>, <Spam(2)>, <Spam(3)>, <Spam(4)>, <Spam(5)>]
 
 ## Using Protocol to fix mypy error
 
-from comparable import SupportsLessThan
+from comparable import SupportsLessThan, SupportsMul
 
 LT = TypeVar("LT", bound=SupportsLessThan)
 
@@ -41,4 +42,11 @@ def top_protocol(series: Iterable[LT], length: int) -> list[LT]:
     ordered = sorted(series, reverse=True) 
     return ordered[:length]
     
+
+# Using protocol mul to func double
+
+M = TypeVar("M", bound=SupportsMul)
+
+def double(x: M) -> M:
+    return x * 2
 
