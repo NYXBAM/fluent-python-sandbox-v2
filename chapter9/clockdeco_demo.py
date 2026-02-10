@@ -12,6 +12,7 @@ def snooze(seconds):
 def factorial(n):
     return 1 if n < 2 else n * factorial(n-1)
 
+print(factorial.__name__) # clocked
 
 if __name__ == '__main__':
     print('*' * 40, 'Calling snooze(.123)')
