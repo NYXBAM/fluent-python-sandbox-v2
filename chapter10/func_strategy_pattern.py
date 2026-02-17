@@ -1,6 +1,7 @@
 from collections.abc import Sequence
 from dataclasses import dataclass
 from decimal import Decimal
+import re
 from typing import Optional, Callable, NamedTuple
 
 
@@ -76,3 +77,13 @@ print(Order(joe, banana_cart, bulk_item_promo)) # <Order total: 30.00 due: 28.50
 long_cart = [LineItem(str(item_code), 1, Decimal('1.0')) for item_code in range(10)]
 print(Order(joe, long_cart, large_order_promo)) # <Order total: 10.00 due: 9.30>
 print(Order(joe, cart, large_order_promo)) # <Order total: 42.00 due: 42.00>
+
+promos = [fidelity_promo, bulk_item_promo, large_order_promo]
+
+def best_promo(order: Order) -> Decimal:
+    return max(promo(order) for promo in promos)
+
+
+print(Order(joe, long_cart, best_promo)) # <Order total: 10.00 due: 9.30>
+print(Order(joe, banana_cart, best_promo)) # <Order total: 30.00 due: 28.50>
+print(Order(ann, cart, best_promo)) # <Order total: 42.00 due: 39.90>
