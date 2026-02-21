@@ -38,3 +38,16 @@ class Vector2d:
         memv = memoryview(octets[1:]).cast(typecode)
         return cls(*memv)
     
+v1 = Vector2d(3, 4)
+print(v1.x, v1.y) # 3.0 4.0
+x, y = v1 
+print(x, y) # 3.0 4.0
+print(v1) # (3.0, 4.0)
+v1_clone = eval(repr(v1))
+print(v1 == v1_clone) # True
+
+octets = bytes(v1)
+print(octets) # b'd\x00\x00\x00\x00\x00\x00\x08@\x00\x00\x00\x00\x00\x00\x10@'
+print(abs(v1)) # 5.0
+print(bool(v1), bool(Vector2d(0, 0))) # True False
+print(v1.frombytes(octets)) # Vector2d(3.0, 4.0)
