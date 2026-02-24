@@ -1,11 +1,12 @@
 from array import array
 import math
-from tkinter import Y
 
 
 class Vector2d:
-    typecode = 'd'
     __match_args__ = ('x', 'y')
+    __slots__ = ('__x', '__y')
+    
+    typecode = 'd'
     
     def __init__(self, x, y):
         self.__x = float(x)
@@ -35,7 +36,7 @@ class Vector2d:
     def __bytes__(self):
         return (bytes([ord(self.typecode)]) + 
                 bytes(array(self.typecode, self)))
-        
+         
     def __eq__(self, other):
         return tuple(self) == tuple(other)
     
@@ -67,39 +68,22 @@ class Vector2d:
     
     
     
-def keyword_pattern_demo(v: Vector2d) -> None:
-    "Without __mathch_args__"
-    match v:
-        case Vector2d(x=0, y=0):
-            print(f'{v!r} is null')
-        case Vector2d(x=0):
-            print(f'{v!r} is vertical')
-        case Vector2d(y=0):
-            print(f'{v!r} is horizontal')
-        case Vector2d(x=x, y=y) if x==y:
-            print(f'{v!r} is diagonal')
-        case _:
-            print(f'{v!r} is awesome')
-            
-            
-def keyword_pattern_demo__with_match_args(v: Vector2d) -> None:
-    "With __mathch_args__"
-    match v:
-        case Vector2d(0, 0):
-            print(f'{v!r} is null')
-        case Vector2d(0):
-            print(f'{v!r} is vertical')
-        case Vector2d(_, 0):
-            print(f'{v!r} is horizontal')
-        case Vector2d(x, y) if x==y:
-            print(f'{v!r} is diagonal')
-        case _:
-            print(f'{v!r} is awesome')
-            
-            
-keyword_pattern_demo(Vector2d(x=1, y=1)) #Vector2d(1.0, 1.0) is diagonal
-keyword_pattern_demo__with_match_args(Vector2d(99,1))
-    
+'''
+# Without slots 
 
-v1 = Vector2d(3, 4)
-print(v1.__dict__) # {'_Vector2d__x': 3.0, '_Vector2d__y': 4.0}
+time python3 mem_test.py vector2d_v3 Selected Vector2d type: vector2d_v3.Vector2d Creating 10,000,000 Vector2d instances Initial RAM usage: 6,983,680
+ Final
+RAM usage: 1,666,535,424
+real 0m11.990s
+user 0m10.861s
+sys 0m0.978s
+
+
+# using slots: 
+
+time python3 mem_test.py vector2d_v3_slots Selected Vector2d type: vector2d_v3_slots.Vector2d Creating 10,000,000 Vector2d instances
+Initial RAM usage: 6,995,968
+Final
+RAM usage: 577,839,104
+real 0m8.381s user 0m8.006s sys 0m0.352s
+'''
