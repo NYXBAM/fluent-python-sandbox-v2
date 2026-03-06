@@ -20,3 +20,17 @@ class FrenchDeck:
 FD = FrenchDeck()
 
 print(isinstance(FD, Sequence)) # False
+
+from random import shuffle
+
+deck = FrenchDeck()
+# shuffle(deck) # TypeError: 'FrenchDeck' object does not support item assignment
+
+# Monkey patching __setitem__ to make it work
+def set_card(deck, position, card):
+    deck._cards[position] = card 
+    
+    
+FrenchDeck.__setitem__ = set_card
+shuffle(deck) # No error now
+print(deck[:5])
