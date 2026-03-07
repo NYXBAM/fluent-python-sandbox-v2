@@ -20,7 +20,9 @@ class FrenchDeck2(abc.MutableSequence):
         self._cards[position] = value
         
     def __delitem__(self, position):
+        # The __delitem__ method is required by the MutableSequence ABC, but it is not
         del self._cards[position]
     
     def insert(self, position, value):
+        # The insert method is required by the MutableSequence ABC, but it is not
         self._cards.insert(position, value)
