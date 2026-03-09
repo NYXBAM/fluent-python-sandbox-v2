@@ -27,3 +27,10 @@ class Tombola(abc.ABC):
             
         self.load(items)
         return tuple(items)
+    
+class Fake(Tombola):
+    def pick(self):
+        return 13
+
+# Fake()    
+# f = Fake() # TypeError: Can't instantiate abstract class Fake without an implementation for abstract method 'load'
