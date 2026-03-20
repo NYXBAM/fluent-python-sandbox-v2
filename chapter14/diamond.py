@@ -54,3 +54,32 @@ leaf1.pong()
         <instance of Leaf>.pong() in A
         <instance of Leaf>.pong() in B
 """
+
+
+class LeafRev(B, A):
+    # The order of the base classes is reversed, but the MRO is the same as for Leaf
+    def ping(self):
+        print(f'{self}.ping() in LeafRev')
+        super().ping()
+        
+leaf2 = LeafRev()
+print(LeafRev.__mro__)
+#(<class '__main__.LeafRev'>,
+# <class '__main__.B'>,
+# <class '__main__.A'>,
+# <class '__main__.Root'>,
+# <class 'object'>)
+
+leaf2.ping()
+"""
+        <instance of LeafRev>.ping() in Leaf
+        <instance of LeafRev>.ping() in B
+        <instance of LeafRev>.ping() in A
+        <instance of LeafRev>.ping() in Root
+"""
+        
+leaf2.pong()
+"""
+        <instance of LeafRev>.pong() in B
+"""
+      
