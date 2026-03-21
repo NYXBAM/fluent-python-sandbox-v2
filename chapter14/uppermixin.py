@@ -1,5 +1,4 @@
 import collections
-import re
 
 def _upper(key):
     try: 
