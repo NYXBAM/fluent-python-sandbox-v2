@@ -16,7 +16,7 @@ class TelegramNotifyMixin:
 class BaseScanner:
     def run_scan(self):
         results = 'Scan results'
-        self.export(results)
+        self.export(results) # type: ignore
 
 
 
