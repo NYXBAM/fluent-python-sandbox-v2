@@ -68,3 +68,5 @@ print(max(["Go", "Python", "Rust"])) # Rust
 print(max(1,2,-3, key=abs)) # -3
 print(max(["Go", "Python", "Rust"], key=len)) # Python
 
+print(max([1,2,-3], default=0)) # 2
+print(max([], default=None)) # None
