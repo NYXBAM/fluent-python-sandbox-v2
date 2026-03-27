@@ -22,3 +22,19 @@ print(BookDict.__annotations__)
 # 'title': <class 'str'>, 
 # 'authors': list[str], 
 # 'pagecount': <class 'int'>}
+
+
+AUTHOR_ELEMENT = '<AUTHOR>{}</AUTHOR>'
+
+def to_xml(book: BookDict) -> str:
+    elements: list[str] = []
+    for key, value in book.items():
+        if isinstance(value, list):
+            elements.extend(
+                AUTHOR_ELEMENT.format(n) for n in value
+            )
+        else:
+            tag = key.upper()
+            elements.append(f'<{tag}>{value}</{tag}>')
+    xml = '\n\t'.join(elements)
+    return f'<BOOK>\n\t{xml}\n</BOOK>'
