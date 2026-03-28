@@ -6,9 +6,15 @@ class BookDict(TypedDict):
     authors: list[str]
     pagecount: int
     
+# Not correct authors should be list[str], but this is just to show the type error
+# pp = BookDict(title='Programming Pearls',
+#               authors='Jon Bentley', # This is a type error, should be list[str]
+#               isbn='0202131213',
+#               pagecount=256)
 
+# Correct way to create a BookDict instance
 pp = BookDict(title='Programming Pearls',
-              authors='Jon Bentley', # This is a type error, should be list[str]
+              authors=['Jon Bentley'], # This is correct, authors is a list of strings
               isbn='0202131213',
               pagecount=256)
 
