@@ -16,11 +16,6 @@ Found 3 errors in 2 files (checked 1 source file)
 
 '''
 
-# the from_json with annotations BookDict 
-
-def from_json(data: str) -> BookDict:
-    whatever: BookDict = json.loads(data)
-    return whatever
 
 # # the from_json with cast to BookDict
 

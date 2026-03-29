@@ -1,3 +1,4 @@
+import json
 from typing import TypedDict
 
 class BookDict(TypedDict):
@@ -44,3 +45,10 @@ def to_xml(book: BookDict) -> str:
             elements.append(f'<{tag}>{value}</{tag}>')
     xml = '\n\t'.join(elements)
     return f'<BOOK>\n\t{xml}\n</BOOK>'
+
+
+# the from_json with annotations BookDict 
+
+def from_json(data: str) -> BookDict:
+    whatever: BookDict = json.loads(data)
+    return whatever
