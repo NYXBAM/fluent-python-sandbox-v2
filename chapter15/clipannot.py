@@ -1,0 +1,3 @@
+def clip(text: str, max_len: int =80) -> str: ...
+
+print(clip.__annotations__) # {'text': <class 'str'>, 'max_len': <class 'int'>, 'return': <class 'str'>}
