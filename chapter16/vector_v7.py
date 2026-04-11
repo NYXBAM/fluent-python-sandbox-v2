@@ -1,4 +1,6 @@
+from collections import abc
 import itertools
+from termios import VEOL
 from chapter12.vector_v5 import Vector
 
 
@@ -36,13 +38,47 @@ def __mul__(self, scalar):
 
 def __rmul__(self, scalar):
     return self * scalar
+
+
+
+# methods __matmul__, __rmatmul__
+# dot product
+
+# def __matmul__(self, other):
+#     if (isinstance(other, abc.Sized) and 
+#         isinstance(other, abc.Iterable)):
+#         if len(self) == len(other):
+#             return sum(a * b for a, b in zip(self, other))
+#         else:
+#             raise ValueError ('@ requires vectors of equal length')
+#     else:
+#         return NotImplemented
     
+# From Python 3.10 zip using strict=True
+def __matmul__(self, other):
+    if isinstance(other, abc.Iterable): 
+        try:
+            # using strict = True 
+            return sum(a * b for a, b in zip(self, other, strict=True))
+        except ValueError:
+            # if len != len 
+            raise ValueError('@ requires vectors of equal length') from None
+    else:
+        return NotImplemented
+    
+def __rmatmul__(self, other):
+    return self @ other
+
+
+
 # Monkey patching 
 
 Vector.__add__ = __add__ # type: ignore
 Vector.__radd__ = __radd__ # type: ignore
 Vector.__mul__ = __mul__ # type: ignore
 Vector.__rmul__ = __rmul__ # type: ignore
+Vector.__matmul__ = __matmul__ # type: ignore 
+Vector.__rmatmul__ = __rmatmul__ # type: ignore 
 
 
 
@@ -71,3 +107,13 @@ print(14 * v1) # (14.0, 28.0, 42.0)
 print(v1 * True) # (1.0, 2.0, 3.0)
 from fractions import Fraction
 print(v1 * Fraction(1, 3)) # (0.3333333333333333, 0.6666666666666666, 1.0)
+
+
+
+va = Vector([1, 2, 3])
+vz = Vector([5, 6, 7])
+print(va @ vz) # 38.0 
+print(va @ vz == 38.0)# True # 1*5 + 2*6 + 3*7
+print([10,20,30] @ vz) # 380.0
+
+# print(va @ 3)   # TypeError: unsupported operand type(s) for @: 'Vector' and 'int'
