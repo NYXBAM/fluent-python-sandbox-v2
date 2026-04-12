@@ -70,6 +70,22 @@ def __rmatmul__(self, other):
     return self @ other
 
 
+# eq 
+# def __eq__(self, other):
+#     return (len(self) == len(other) and 
+#             all(a == b for a, b in zip(self, other)))
+
+
+# Better way to avoud [1,2] == (1,2) # Fasle
+def __eq__(self, other):
+    if isinstance(other, Vector):
+        return (len(self) == len(other) and
+                all(a == b for a, b in zip(self, other)))
+    else: 
+        return NotImplemented 
+
+
+
 
 # Monkey patching 
 
@@ -79,7 +95,7 @@ Vector.__mul__ = __mul__ # type: ignore
 Vector.__rmul__ = __rmul__ # type: ignore
 Vector.__matmul__ = __matmul__ # type: ignore 
 Vector.__rmatmul__ = __rmatmul__ # type: ignore 
-
+Vector.__eq__ = __eq__ # type: ignore
 
 
 v1 = Vector([3,4,5,6])
@@ -117,3 +133,13 @@ print(va @ vz == 38.0)# True # 1*5 + 2*6 + 3*7
 print([10,20,30] @ vz) # 380.0
 
 # print(va @ 3)   # TypeError: unsupported operand type(s) for @: 'Vector' and 'int'
+
+
+# EQ 
+vb = Vector(range(1,4))
+print(va == vb) # True 
+
+vc = Vector([1,2])
+
+t3 = (1,2,3)
+print(va == t3) # True 
