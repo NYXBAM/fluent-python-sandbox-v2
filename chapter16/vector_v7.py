@@ -143,3 +143,21 @@ vc = Vector([1,2])
 
 t3 = (1,2,3)
 print(va == t3) # True 
+
+
+# Augmented Assignment Operators
+
+v1 = Vector([1, 2, 3])
+v1_alias = v1 
+print(id(v1)) # 4528247568
+
+v1 += Vector([4,5,6])
+print(v1) # (5.0, 7.0, 9.0)
+
+print(id(v1)) # 4527422144
+print(v1_alias) # (1.0, 2.0, 3.0)
+
+v1 *= 11
+print(v1) # (55.0, 77.0, 99.0)
+
+print(id(v1)) # 4529021616
