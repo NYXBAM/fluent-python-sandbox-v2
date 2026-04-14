@@ -1,6 +1,5 @@
 from collections import abc
 import itertools
-from termios import VEOL
 from chapter12.vector_v5 import Vector
 
 
