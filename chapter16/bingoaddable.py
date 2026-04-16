@@ -30,4 +30,28 @@ class AddableBingoCage(BingoCage):
 vowels = "AEIOU"
 
 globe = AddableBingoCage(vowels)
-print(globe.inspect())
+print(globe.inspect()) # ('I', 'A', 'O', 'E', 'U')
+
+print(globe.pick() in vowels) # True
+
+print(len(globe.inspect())) # 4
+
+globe2 = AddableBingoCage('XYZ')
+globe3 = globe + globe2
+print(len(globe3.inspect())) # 7
+# void = globe + [10, 20]
+# print(void) #     void = globe + [10, 20]
+#            ~~~~~~^~~~~~~~~~
+# TypeError: unsupported operand type(s) for +: 'AddableBingoCage' and 'list'
+
+globe_orig = globe
+print(len(globe.inspect())) # 4
+
+globe += globe2
+print(len(globe.inspect())) # 7
+
+globe += ['M','N']
+print(len(globe.inspect())) # 9
+
+print(globe is globe_orig) #True
+# globe += 1 # TypeError: right operand must be AddableBingoCage or an iterable

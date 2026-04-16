@@ -1,6 +1,6 @@
 import random 
 
-from tombola import Tombola
+from .tombola import Tombola
 
 class BingoCage(Tombola):
     def __init__(self, items):
