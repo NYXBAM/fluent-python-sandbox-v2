@@ -42,6 +42,26 @@ print(list(s)) # ['The', 'time', 'has', 'come', 'the', 'Walrus', 'said']
 
 
 
+class Spam:
+    def __getitem__(self,i):
+        print('->', i)
+        raise IndexError()
+
+spam_can = Spam()
+print(iter(spam_can)) # <iterator object at 0x10e6afc70>
+print(list(spam_can)) # -> 0 
+# []
+from collections import abc
+print(isinstance(spam_can, abc.Iterable)) # False 
+
+
+class GooseSpam:
+    def __iter__(self):
+        pass
+    
+print(issubclass(GooseSpam, abc.Iterable)) # True 
+goose_spam_can = GooseSpam()
+print(isinstance(goose_spam_can, abc.Iterable)) # True 
 
 
 
