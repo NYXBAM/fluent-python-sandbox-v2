@@ -65,6 +65,18 @@ print(isinstance(goose_spam_can, abc.Iterable)) # True
 
 
 
+s3 = Sentence('Life of Brian')
+it = iter(s3)
+print(it)  # <list_iterator object at 0x110745990>
+print(next(it)) # Life
+print(next(it)) # of
+print(next(it)) # Brian
+# print(next(it)) # StopIteration
+print(list(it)) # []
+print(list(iter(s3))) # ['Life', 'of', 'Brian']
+
+
+
 # some simple testing cases (not from book)
 def test_sentence():
     s = Sentence("Hello world")
@@ -80,5 +92,18 @@ def test_not_str():
     with pytest.raises(TypeError):
         s = Sentence(1, 2, 3, 4, 5, 6)
     
-
-
+def test_stop_iter():
+    s = Sentence('Hello world')
+    it = iter(s)
+    list(it)
+    with pytest.raises(StopIteration):
+        next(it)
+        
+        
+def test_iterator():
+    it = iter(Sentence("One Two"))
+    assert next(it) == "One"
+    assert next(it) == "Two"
+    with pytest.raises(StopIteration):
+        next(it)
+    assert list(it) == []
