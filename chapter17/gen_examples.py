@@ -7,7 +7,7 @@ def gen_AB():
     
 
 res1 = [x*3 for x in gen_AB()]
-# it's eager func
+# eager func
 
 print(res1)
 '''
@@ -24,7 +24,7 @@ for i in res1:
 '''
 
 res2 = (x*3 for x in gen_AB())
-# it's lazy evaluation
+# lazy evaluation
 print(res2) # <generator object <genexpr> at 0x101c629b0>
 for i in res2:
     print('-->', i)
