@@ -28,6 +28,20 @@ def aritprog_gen(begin, step, end=None):
         yield result
         index += 1
         result = begin + step * index
+        
+
+# USING itertools 
+import itertools 
+
+def aritprog_gen_v2(begin, step, end=None):
+    first = type(begin + step)(begin)
+    ap_gen = itertools.count(first, step)
+    if end is None:
+        return ap_gen
+    
+    return itertools.takewhile(lambda n: n < end, ap_gen)
+    
+
             
 ap = ArithmeticProgression(0, 1, 5)
 print(list(ap)) # [0, 1, 2, 3, 4]
