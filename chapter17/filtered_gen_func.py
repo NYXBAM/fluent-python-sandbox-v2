@@ -97,6 +97,52 @@ def area(w, h):
 
 print(list(itertools.starmap(area,shapes))) # [10, 6, 100]
 
+##############################
+# itertools.chain(it1, it2, ...)
+
+numbers = [1,2,3]
+letters = ['a', 'b']
+
+for item in itertools.chain(numbers, letters):
+    print(item)
+
+'''
+1
+2
+3
+a
+b
+'''
+##############################
+# itertools.chain.from_iterable(it)
+matrix = [[1,2], [3,4], [5,6], [7,8,9],[10,11]]
+flat = list(itertools.chain.from_iterable(matrix))
+print(flat) # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
+##############################
+# itertools.product(it1, it2, ..., repeat=1)
+colors = ['red', 'blue']
+sizes = ['S', 'M']
+combinations = list(itertools.product(colors, sizes))
+print(combinations)  #[('red', 'S'), ('red', 'M'), ('blue', 'S'), ('blue', 'M')]
+
+
+##############################
+# zip(it1, ..., itN, strict=False)  # strict=True if len(it1) != len(itOther)
+
+names = ["Alice", "Bob"]
+scores = [100,85,90]
+print(list(zip(names, scores))) # [('Alice', 100), ('Bob', 85)]
+
+
+##############################
+# itertools.zip_longest(it1, ..., fillvalue=None) 
+from typing import Any # to avoid mypy errors
+
+names: list[Any] = ["Alice", "Bob"]
+scores: list[Any] = [100,85,90]
+print(list(itertools.zip_longest(names, scores, fillvalue='NoScore'))) # [('Alice', 100), ('Bob', 85), ('NoScore', 90)]
+
 
 # some examples from book
 
@@ -121,3 +167,17 @@ print(list(itertools.accumulate(sample, min))) # [5, 4, 2, 2, 2, 2, 2, 0, 0, 0]
 print(list(itertools.accumulate(sample, max))) # [5, 5, 5, 8, 8, 8, 8, 8, 9, 9]
  
 print(list(itertools.accumulate(range(1,11), operator.mul))) # [1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800]
+
+print(list(enumerate('albatroz', 1))) # [(1, 'a'), (2, 'l'), (3, 'b'), (4, 'a'), (5, 't'), (6, 'r'), (7, 'o'), (8, 'z')]
+
+print(list(map(operator.mul, range(11), range(11)))) # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81, 100]
+
+
+print(list(map(operator.mul, range(11), [2,4,8]))) # [0,4,16]
+print(list(map(lambda a, b: (a, b), range(11), [2,4,8]))) # [(0, 2), (1, 4), (2, 8)]
+
+print(list(itertools.starmap(operator.mul, enumerate('albatroz', 1)))) # ['a', 'll', 'bbb', 'aaaa', 'ttttt', 'rrrrrr', 'ooooooo', 'zzzzzzzz']
+
+sample = [5,4,2,8,7,6,3,0,9,1]
+print(list(itertools.starmap(lambda a, b: b / a, enumerate(itertools.accumulate(sample), 1))))
+# [5.0, 4.5, 3.6666666666666665, 4.75, 5.2, 5.333333333333333, 5.0, 4.375, 4.888888888888889, 4.5]
