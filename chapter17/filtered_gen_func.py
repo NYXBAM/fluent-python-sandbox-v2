@@ -113,11 +113,16 @@ for item in itertools.chain(numbers, letters):
 a
 b
 '''
+print(list(itertools.chain('ABC', range(2)))) # ['A', 'B', 'C', 0, 1]
+print(list(itertools.chain(enumerate('ABC')))) # [(0, 'A'), (1, 'B'), (2, 'C')]
 ##############################
 # itertools.chain.from_iterable(it)
 matrix = [[1,2], [3,4], [5,6], [7,8,9],[10,11]]
 flat = list(itertools.chain.from_iterable(matrix))
 print(flat) # [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+print(list(itertools.chain.from_iterable(enumerate('ABC')))) # [0, 'A', 1, 'B', 2, 'C']
+
+
 
 ##############################
 # itertools.product(it1, it2, ..., repeat=1)
@@ -125,7 +130,12 @@ colors = ['red', 'blue']
 sizes = ['S', 'M']
 combinations = list(itertools.product(colors, sizes))
 print(combinations)  #[('red', 'S'), ('red', 'M'), ('blue', 'S'), ('blue', 'M')]
-
+suits = 'spades hearts diamonds clubs'.split()
+print(list(itertools.product('AK', suits)))
+'''
+[('A', 'spades'), ('A', 'hearts'), ('A', 'diamonds'), ('A', 'clubs'), ('K', 'spades'), ('K', 'hearts'), ('K', 'diamonds'), ('K', 'clubs')]
+'''
+print(list(itertools.product(range(2), repeat=3))) # [(0, 0, 0), (0, 0, 1), (0, 1, 0), (0, 1, 1), (1, 0, 0), (1, 0, 1), (1, 1, 0), (1, 1, 1)]
 
 ##############################
 # zip(it1, ..., itN, strict=False)  # strict=True if len(it1) != len(itOther)
@@ -133,7 +143,7 @@ print(combinations)  #[('red', 'S'), ('red', 'M'), ('blue', 'S'), ('blue', 'M')]
 names = ["Alice", "Bob"]
 scores = [100,85,90]
 print(list(zip(names, scores))) # [('Alice', 100), ('Bob', 85)]
-
+print(list(zip("ABC", range(5), [10,20,30,40]))) # [('A', 0, 10), ('B', 1, 20), ('C', 2, 30)]
 
 ##############################
 # itertools.zip_longest(it1, ..., fillvalue=None) 
