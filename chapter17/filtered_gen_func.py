@@ -154,6 +154,50 @@ scores: list[Any] = [100,85,90]
 print(list(itertools.zip_longest(names, scores, fillvalue='NoScore'))) # [('Alice', 100), ('Bob', 85), ('NoScore', 90)]
 
 
+##############################
+# itertools.combinations(it, out_len)
+
+print(list(itertools.combinations([1,2,3], 2)))
+# [(1, 2), (1, 3), (2, 3)]
+ 
+ 
+ ##############################
+ # itertools.combinations_with_replacment(it, out_len)
+
+print(list(itertools.combinations_with_replacement([1,2,], 2)))
+ # [(1, 1), (1, 2), (2, 2)]
+
+
+ ##############################
+ # itertools.count(start=0, start=1)
+for i in itertools.count(10,5):
+     if i > 25: break
+     print(i, end=' ') # 10 15 20 25 
+     
+
+ ##############################
+ # itertools.cycle(it)
+c = 0
+for i in itertools.cycle("ABC"):
+     if c == 5: break
+     print(i, end=' ') # A B C A B
+     c += 1
+ 
+##############################
+# itertools.pairwise(it)
+
+print(list(itertools.pairwise([1, 2, 3, 4]))) #  [(1, 2), (2, 3), (3, 4)]
+
+
+##############################
+# itertools.permutations(it, out_len=None)
+print(list(itertools.permutations([1,2], 2))) # [(1, 2), (2, 1)]
+
+##############################
+#itertools.repeat(item, [times])
+print(list(itertools.repeat('Hi', 3)))  # ['Hi', 'Hi', 'Hi']
+
+
 # some examples from book
 
 def vowel(c):
@@ -191,3 +235,8 @@ print(list(itertools.starmap(operator.mul, enumerate('albatroz', 1)))) # ['a', '
 sample = [5,4,2,8,7,6,3,0,9,1]
 print(list(itertools.starmap(lambda a, b: b / a, enumerate(itertools.accumulate(sample), 1))))
 # [5.0, 4.5, 3.6666666666666665, 4.75, 5.2, 5.333333333333333, 5.0, 4.375, 4.888888888888889, 4.5]
+
+
+ct = itertools.count()
+print(next(ct)) # 0
+print(next(ct), next(ct), next(ct), next(ct)) # 1 2 3 4
