@@ -240,3 +240,34 @@ print(list(itertools.starmap(lambda a, b: b / a, enumerate(itertools.accumulate(
 ct = itertools.count()
 print(next(ct)) # 0
 print(next(ct), next(ct), next(ct), next(ct)) # 1 2 3 4
+
+print(list(itertools.islice(itertools.count(1, .3), 3))) # [1, 1.3, 1.6]
+
+cy = itertools.cycle('ABC')
+print(next(cy)) # A
+print(list(itertools.islice(cy, 7))) # ['B', 'C', 'A', 'B', 'C', 'A', 'B']
+
+print(list(itertools.pairwise(range(7)))) # [(0, 1), (1, 2), (2, 3), (3, 4), (4, 5), (5, 6)]
+
+rp = itertools.repeat(7)
+print(next(rp), next(rp)) # 7 7
+print(list(itertools.repeat(8, 4))) # [8, 8, 8, 8]
+
+print(list(map(operator.mul, range(11), itertools.repeat(5))))
+# [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50]
+
+print(list(itertools.combinations('ABC', 2))) # [('A', 'B'), ('A', 'C'), ('B', 'C')]
+print(list(itertools.combinations_with_replacement('ABC', 2))) # [('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'B'), ('B', 'C'), ('C', 'C')]
+print(list(itertools.permutations("ABC", 2))) #[('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'C'), ('C', 'A'), ('C', 'B')]
+print(list(itertools.product('ABC', repeat=2))) #[('A', 'A'), ('A', 'B'), ('A', 'C'), ('B', 'A'), ('B', 'B'), ('B', 'C'), ('C', 'A'), ('C', 'B'), ('C', 'C')]
+# product is 
+# for i in "ABC":
+    # for j in "ABC":
+'''
+result = []
+for i in "ABC":          # Outer loop
+    for j in "ABC":      # Inner loop
+        result.append((i, j))
+
+print(result)
+'''
