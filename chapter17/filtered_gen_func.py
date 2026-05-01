@@ -271,3 +271,42 @@ for i in "ABC":          # Outer loop
 
 print(result)
 '''
+print(list(itertools.groupby("LLLLAAGGG")))
+# [('L', <itertools._grouper object at 0x100c15e40>), ('A', <itertools._grouper object at 0x100c14880>), ('G', <itertools._grouper object at 0x100c16d10>)]
+
+for char, group in itertools.groupby("LLLLAAGGG"):
+    print(char, '->', list(group))    
+'''
+L -> ['L', 'L', 'L', 'L']
+A -> ['A', 'A']
+G -> ['G', 'G', 'G']
+'''
+animals = ['duck', 'eagle', 'rat', 'giraffe', 'bear', 'bat', 'dolphin', 'shark', 'lion']
+animals.sort(key=len)
+print(animals) # ['rat', 'bat', 'duck', 'bear', 'lion', 'eagle', 'shark', 'giraffe', 'dolphin']
+
+for length, group in itertools.groupby(reversed(animals), len):
+    print(length, '->', list(group))
+'''
+7 -> ['dolphin', 'giraffe']
+5 -> ['shark', 'eagle']
+4 -> ['lion', 'bear', 'duck']
+3 -> ['bat', 'rat']
+'''
+for length, group in itertools.groupby(animals, len):
+    print(length, '->', list(group))
+'''
+3 -> ['rat', 'bat']
+4 -> ['duck', 'bear', 'lion']
+5 -> ['eagle', 'shark']
+7 -> ['giraffe', 'dolphin']
+'''
+
+print(list(itertools.tee('ABC'))) # [<itertools._tee object at 0x102ddcc00>, <itertools._tee object at 0x102ddcbc0>]
+
+g1, g2 = itertools.tee('ABC')
+print(next(g1)) # A
+print(next(g2)) # A
+print(next(g2)) # B 
+print(list(g1)) # ['B', 'C']
+print(list(g2)) # ['C']
