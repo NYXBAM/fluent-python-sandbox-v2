@@ -310,3 +310,13 @@ print(next(g2)) # A
 print(next(g2)) # B 
 print(list(g1)) # ['B', 'C']
 print(list(g2)) # ['C']
+
+print(all([1,2,3])) # True 
+print(all([1,0,3])) # False
+print(all([])) # True 
+
+print(any([1,2,3])) # True  
+print(any([1,0,3])) # True 
+print(any([0,0,0])) # False 
+print(any([])) # False 
+
