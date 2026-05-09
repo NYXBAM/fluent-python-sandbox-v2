@@ -42,3 +42,25 @@ try:
     coro_avg.send(STOP)
 except StopIteration as e:
     print(e.value) # Result(count=3, average=15.0)
+    
+    
+def compute():
+    res = yield from averager2(True)
+    print('computed:', res)
+    return res 
+
+comp = compute()
+
+for v in [None, 10, 20, 30, STOP]:
+    try:
+        comp.send(v)
+    except StopIteration as exc:
+        result = exc.value
+'''
+received 10
+received 20
+received 30
+received <Sentinel>
+computed: Result(count=3, average=20.0)
+'''
+print(result) # Result(count=3, average=20.0)
