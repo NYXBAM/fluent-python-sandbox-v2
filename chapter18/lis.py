@@ -1,9 +1,10 @@
 
+from itertools import chain
 import math
 import operator as op
 from collections import ChainMap
-from itertools import chain 
-from typing import Any, TypeAlias, NoReturn
+from typing import Any, NoReturn, TypeAlias
+
 
 Symbol: TypeAlias = str
 Atom: TypeAlias = float | int | Symbol 
@@ -40,6 +41,50 @@ def parse_atom(token: str) -> Atom:
             return Symbol(token)
 
 
+class Environment(ChainMap[Symbol, Any]):
+    def change(self, key: Symbol, value: Any) -> None: 
+        for map in self.maps:
+            if key in map:
+                map[key] = value 
+                return
+        raise KeyError(key)
+    
+
+def standard_env() -> Environment:
+    env = Environment()
+    env.update(vars(math))
+    env.update({
+        '+': op.add,
+        '-': op.sub,
+        '*': op.mul,
+        '/': op.truediv,
+        'abs': abs,
+        'append': lambda *args: list(chain(*args)), 'apply': lambda proc, args: proc(*args), 'begin': lambda *x: x[-1],
+        'car': lambda x: x[0],
+        'cdr': lambda x: x[1:],
+        'number?': lambda x: isinstance(x, (int, float)), 'procedure?': callable,
+        'round': round,
+        'symbol?': lambda x: isinstance(x, Symbol),
+    })
+    return env
+
+
+def repl(prompt: str = 'lis.py> ') -> NoReturn:
+    global_env = Environment({}, standard_env())
+    while True:
+        ast = parse(input(prompt))
+        val = evaluate(ast, global_env)
+        if val is not None:
+            print(lispstr(val))
+            
+def lispstr(exp: object) -> str:
+    if isinstance(exp, list):
+        return '(' + ' '.join(map(lispstr, exp)) + ')'
+    else:
+        return str(exp)
+
+
+
 print(parse('1,5')) # 1,5 
 print(parse('ni!')) # ni!
 print(parse('(gcd 18 45)')) # ['gcd', 18, 45]
@@ -48,3 +93,13 @@ print(parse('''
             (lambda (n)
             (* n 2)))
             '''))   # ['define', 'double', ['lambda', ['n'], ['*', 'n', 2]]]
+
+inner_env = {'a': 2}
+outer_env = {'a': 0, 'b': 1}
+env = Environment(inner_env, outer_env)
+print(env['a']) # 2
+env['a'] = 111
+env['c'] = 222
+print(env) # Environment({'a': 111, 'c': 222}, {'a': 0, 'b': 1})
+env.change('b', 333)
+print(env) # Environment({'a': 111, 'c': 222}, {'a': 0, 'b': 333})
