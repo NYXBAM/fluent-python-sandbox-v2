@@ -1,4 +1,3 @@
-
 from itertools import chain
 import math
 import operator as op
