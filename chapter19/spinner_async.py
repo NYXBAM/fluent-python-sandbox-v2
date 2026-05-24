@@ -1,7 +1,7 @@
 
 import asyncio
 import itertools
-
+import spinner_async_nap
 
 async def spin(msg: str) -> None:
     for char in itertools.cycle(r'\|/-'):
@@ -15,8 +15,10 @@ async def spin(msg: str) -> None:
         print(f'\r{blanks}\r', end='')
   
 async def slow() -> int:
-    await asyncio.sleep(3)
-    return 42
+    # await asyncio.sleep(3)
+    large_prime = 5_000_111_000_222_021
+    result = await spinner_async_nap.is_prime(large_prime)
+    return result
 
 
 def main() -> None:
