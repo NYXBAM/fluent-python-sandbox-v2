@@ -34,5 +34,5 @@ if __name__ == '__main__':
 '''
 spinner object: <Thread(Thread-1 (spin), initial)>
 |thinking 
-Answer: 42
+Answer: 42 
 '''
