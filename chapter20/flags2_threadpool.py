@@ -7,7 +7,7 @@ import tqdm
 from flags2_common import main, DownloadStatus
 from flags2_sequential import download_one
 
-DEFAULT_CONCUR_REQ = 30 
+DEFAULT_CONCUR_REQ = 10
 MAX_CONCUR_REQ = 1000
 
 def download_many(cc_list: list[str],
