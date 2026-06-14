@@ -1,9 +1,43 @@
 import asyncio
 from asyncio.trsock import TransportSocket
 import functools
+from re import search
 import sys
 from typing import cast
-from charindex import InvertedIndex
+from charindex import InvertedIndex, format_results
+
+CRLF = b'\r\n'
+PROMPT = b'?> '
+
+async def finder(index: InvertedIndex,
+                 reader: asyncio.StreamReader,
+                 writer: asyncio.StreamWriter) -> None:
+    client = writer.get_extra_info('peername')
+    while True: 
+        writer.write(PROMPT)
+        await writer.drain()
+        data = await reader.readline()
+        if not data:
+            break
+        try: 
+            query = data.decode().strip()
+        except UnicodeDecodeError:
+            query = '\x00'
+            
+        print(f'From {client}: {query!r}')
+        if query:
+            if ord(query[:1]) < 32: 
+                break
+            
+            results = await search(query, index, writer)
+            print(f'To {client}: {results} results.')
+            
+    writer.close()
+    await writer.wait_closed()
+    print(f'Close {client}.')
+    
+
+
 
 
 async def supervisor(index: InvertedIndex, host: str, port: int) -> None:
