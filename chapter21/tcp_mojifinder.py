@@ -1,7 +1,6 @@
 import asyncio
 from asyncio.trsock import TransportSocket
 import functools
-from re import search
 import sys
 from typing import cast
 from charindex import InvertedIndex, format_results
@@ -37,6 +36,18 @@ async def finder(index: InvertedIndex,
     print(f'Close {client}.')
     
 
+async def search(query: str, 
+                 index: InvertedIndex,
+                 writer: asyncio.StreamWriter) -> int:
+    chars = index.search(query)
+    lines = (line.encode() + CRLF for line
+             in format_results(chars))
+    writer.writelines(lines)
+    await writer.drain()
+    status_line = f"{'-'* 66} {len(chars)} found"
+    writer.write(status_line.encode() + CRLF)
+    await writer.drain()
+    return len(chars)
 
 
 
