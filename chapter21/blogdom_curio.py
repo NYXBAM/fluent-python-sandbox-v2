@@ -1,3 +1,6 @@
+# This library is deprecated for newer versions of Python.
+# To run this code, please use Python 3.5 or lower.
+
 from curio import run, TaskGroup 
 import curio.socket as socket
 from keyword import kwlist
