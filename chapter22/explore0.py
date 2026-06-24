@@ -1,20 +1,28 @@
-from collections import abc 
-import json 
+import json
+from collections import abc
 
 
-class FrozenJSON: 
+class FrozenJSON:
     def __init__(self, mapping):
         self.__data = dict(mapping)
-        
+
     def __getattr__(self, name):
-        try: 
+        try:
             return getattr(self.__data, name)
         except AttributeError:
-            return FrozenJSON.build(self.__data[name])
-    
+            try:
+                return FrozenJSON.build(self.__data[name])
+            except KeyError:
+                raise AttributeError(
+                    f"'{type(self).__name__}' object has no attribute '{name}'"
+                )
+
     def __dir__(self):
         return self.__data.keys()
-    
+
+    def __len__(self):
+        return len(self.__data)
+
     @classmethod
     def build(cls, obj):
         if isinstance(obj, abc.Mapping):
@@ -22,20 +30,23 @@ class FrozenJSON:
         elif isinstance(obj, abc.MutableSequence):
             return [cls.build(item) for item in obj]
         else:
-            return obj 
+            return obj
 
-raw_feed = json.load(open('data/osconfeed.json'))
+
+raw_feed = json.load(open("data/osconfeed.json"))
 feed = FrozenJSON(raw_feed)
-print(len(feed.Schedule.speakers)) # 357 
-print(feed.keys()) # dict_keys(['Schedule'])
-print(sorted(feed.Schedule.keys()))  # ['conferences', 'events', 'speakers', 'venues']
-print(feed.Schedule.conferences[0].serial)
-print(feed.Schedule.speakers)
-for speaker in feed.Schedule.speakers:
+print(len(feed.Schedule.speakers))  # 357 # type: ignore
+print(feed.keys())  # dict_keys(['Schedule']) # type: ignore
+print(
+    sorted(feed.Schedule.keys())  # type: ignore
+)  # ['conferences', 'events', 'speakers', 'venues'] # type: ignore
+print(feed.Schedule.conferences[0].serial)  # type: ignore# type: ignore
+print(feed.Schedule.speakers)  # type: ignore
+for speaker in feed.Schedule.speakers:  # type: ignore
     print(speaker.name)
 
 """
-...        
+...
 Frederic Berg
 Tim Berglund
 Andrew Berkowitz
@@ -48,7 +59,7 @@ Adam Bordelon
 Jay Borenstein
 Joe Bowser
 Garth Braithwaite
-Alex Brandt 
+Alex Brandt
 VM Brasseur
 Tim Bray
 Michael Brewer
@@ -61,10 +72,10 @@ Greg Bulmash
 """
 
 
-for key, value in sorted(feed.Schedule.items()):
-    print(f'{len(value):3} {key}')
-    
-"""  
+for key, value in sorted(feed.Schedule.items()):  # type: ignore
+    print(f"{len(value):3} {key}")
+
+"""
 1 conferences
 484 events
 357 speakers
