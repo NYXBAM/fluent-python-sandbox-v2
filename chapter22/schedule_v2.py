@@ -6,15 +6,23 @@ JSON_PATH = "data/osconfeed.json"
 
 def load(path=JSON_PATH):
     records = {}
-    with open(path, mode="r") as fp:
+    with open(path) as fp:
         raw_data = json.load(fp)
-    for collection, raw_records in raw_data["Schedule"].items():  # type: ignore
-        # record_type = collection[:-1]
-        record_type = collection.removesuffix('s') # From python >=3.9
+    for collection, raw_records in raw_data["Schedule"].items():
+        # record_type = collection[:-1] # OLD style
+        record_type = collection.removesuffix("s")  # python >=3.9
+        cls_name = record_type.capitalize()
+        cls = globals().get(cls_name, Record)
+        if inspect.isclass(cls) and issubclass(cls, Record):
+            factory = cls
+        else:
+            factory = Record
         for raw_record in raw_records:
             key = f"{record_type}.{raw_record['serial']}"
-            records[key] = Record(**raw_record)
+            records[key] = factory(**raw_record)
+
     return records
+
 
 class Record:
     __index = None
@@ -23,7 +31,7 @@ class Record:
         self.__dict__.update(kwargs)
 
     def __repr__(self):
-        return f"<{self.__class__.__name__} serial={self.serial!r}>"
+        return f"<{self.__class__.__name__} serial={self.serial!r}>"  # type: ignore
 
     @staticmethod
     def fetch(key):
@@ -31,15 +39,21 @@ class Record:
             Record.__index = load()
         return Record.__index[key]
 
+
 class Event(Record):
-    
     def __repr__(self):
         try:
-            return f"<{self.__class__.__name__} {self.name!r}>"
+            return f"<{self.__class__.__name__} {self.name!r}>"  # type: ignore
         except AttributeError:
             return super().__repr__()
-        
+
     @property
     def venue(self):
-        key = f'venue.{self.venue_serial}'
+        key = f"venue.{self.venue_serial}"  # type: ignore
         return self.__class__.fetch(key)
+
+
+event = Record.fetch("event.33950")
+print(event)  # <Event 'There *Will* Be Bugs'>
+print(event.venue)  # <Record serial=1449>
+print(event.venue.name)  # Portland 251
