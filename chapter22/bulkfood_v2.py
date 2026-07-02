@@ -17,3 +17,17 @@ class LineItem:
             self.__weight = value
         else:
             raise ValueError("value must be > 0")
+
+    @property
+    def price(self):
+        return self.__price
+
+    @price.setter
+    def price(self, value):
+        if value > 0:
+            self.__price = value
+        else:
+            raise ValueError("value must be > 0")
+
+
+# walnuts = LineItem("walnuts", 0, 10.00) # ValueError: value must be > 0
