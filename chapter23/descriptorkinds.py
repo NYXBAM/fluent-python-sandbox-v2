@@ -2,7 +2,7 @@ def cls_name(obj_or_cls):
     cls = type(obj_or_cls)
     if cls is type:
         cls = obj_or_cls
-        return cls.__name__.split(".")[-1]
+    return cls.__name__.split(".")[-1]
 
 
 def display(obj):
@@ -45,3 +45,13 @@ class Managed:
 
     def spam(self):
         print(f"-> Managed.spam({display(self)}")
+
+
+obj = Managed()
+obj.over  # -> Overriding.__get__(<Overriding object>, <Managed object>, <class Managed>)
+Managed.over  # -> Overriding.__get__(<Overriding object>, None, <class Managed>)
+obj.over = 7  # -> Overriding.__set__(<Overriding object>, <Managed object>, 7)
+obj.over  # -> Overriding.__get__(<Overriding object>, <Managed object>, <class Managed>)
+obj.__dict__["over"] = 8
+print(vars(obj))  # {'over': 8}
+obj.over  # -> Overriding.__get__(<Overriding object>, <Managed object>, <class Managed>)
