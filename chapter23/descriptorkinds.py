@@ -31,6 +31,7 @@ class Overriding:
 class OverridingNoGet:
     def __set__(self, instance, value):
         print_args("set", self, instance, value)
+        instance.__dict__["over_no_get"] = value
 
 
 class NonOverriding:
@@ -40,7 +41,7 @@ class NonOverriding:
 
 class Managed:
     over = Overriding()
-    over_no_get = OverridingNoGet
+    over_no_get = OverridingNoGet()
     non_over = NonOverriding()
 
     def spam(self):
@@ -55,3 +56,16 @@ obj.over  # -> Overriding.__get__(<Overriding object>, <Managed object>, <class 
 obj.__dict__["over"] = 8
 print(vars(obj))  # {'over': 8}
 obj.over  # -> Overriding.__get__(<Overriding object>, <Managed object>, <class Managed>)
+
+
+print(obj.over_no_get)  # <__main__.OverridingNoGet object at 0x10e545010>
+print(Managed.over_no_get)  # <__main__.OverridingNoGet object at 0x10b609010>
+obj.over_no_get = (
+    7  # -> OverridingNoGet.__set__(<OverridingNoGet object>, <Managed object>, 7)
+)
+obj.__dict__["over_no_get"] = 9
+print(obj.over_no_get)  # 9
+obj.over_no_get = (
+    7  # -> OverridingNoGet.__set__(<OverridingNoGet object>, <Managed object>, 7)
+)
+print(obj.over_no_get)  # 9
