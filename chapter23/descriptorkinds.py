@@ -69,3 +69,11 @@ obj.over_no_get = (
     7  # -> OverridingNoGet.__set__(<OverridingNoGet object>, <Managed object>, 7)
 )
 print(obj.over_no_get)  # 9
+
+
+obj.non_over  # -> NonOverriding.__get__(<NonOverriding object>, <Managed object>, <class Managed>)
+obj.non_over = 7
+print(obj.non_over)  # 7
+Managed.non_over  # -> NonOverriding.__get__(<NonOverriding object>, None, <class Managed>)
+del obj.non_over
+obj.non_over  # -> NonOverriding.__get__(<NonOverriding object>, <Managed object>, <class Managed>)
