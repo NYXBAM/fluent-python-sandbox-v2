@@ -77,3 +77,17 @@ print(obj.non_over)  # 7
 Managed.non_over  # -> NonOverriding.__get__(<NonOverriding object>, None, <class Managed>)
 del obj.non_over
 obj.non_over  # -> NonOverriding.__get__(<NonOverriding object>, <Managed object>, <class Managed>)
+
+
+obj2 = Managed()
+Managed.over = 1
+Managed.over_no_get = 2
+Managed.non_over = 3
+
+print(obj2.over, obj2.over_no_get, obj2.non_over)  # 1 2 3
+
+obj3 = Managed()
+print(
+    obj3.spam
+)  # <bound method Managed.spam of <__main__.Managed object at 0x1065074d0>>
+print(Managed.spam)  # <function Managed.spam at 0x10615dda0>
