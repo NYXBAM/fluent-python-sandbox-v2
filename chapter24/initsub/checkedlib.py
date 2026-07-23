@@ -1,4 +1,5 @@
 from collections.abc import Callable
+from copyreg import constructor
 from typing import Any, NoReturn, get_type_hints
 
 class Field:
@@ -21,3 +22,23 @@ class Field:
                 raise TypeError(msg) from e 
         instance.__dict__[self.name] = value 
         
+
+class Checked:
+    @classmethod
+    def _fields(cls) -> dict[str, type]:
+        return get_type_hints(cls)
+    
+    
+    def __init_subclass__(cls) -> None:
+        super().__init_subclass__()
+        for name, constructor in cls._fields().items():
+            setattr(cls, name, Field(name, constructor))
+    
+    def __init__(self, **kwargs: Any) -> None:
+        for name in self._fields():
+            value = kwargs.pop(name, ...)
+            setattr(self, name, value)
+            
+        if kwargs:
+            self.__flag_unknown_attrs(*kwargs)
+            
