@@ -29,10 +29,10 @@ class Checked:
         return get_type_hints(cls)
     
     
-    def __init_subclass__(cls) -> None:
+    def __init_subclass__(subcls) -> None:
         super().__init_subclass__()
-        for name, constructor in cls._fields().items():
-            setattr(cls, name, Field(name, constructor))
+        for name, constructor in subcls._fields().items():
+            setattr(subcls, name, Field(name, constructor))
     
     def __init__(self, **kwargs: Any) -> None:
         for name in self._fields():
